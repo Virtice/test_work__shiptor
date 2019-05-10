@@ -4,15 +4,45 @@
     <meta charset="UTF-8">
     <title>Part 1.1</title>
     <script type="text/javascript" src="https://checkout.shiptor.ru/embed/order.js"></script>
+    <script type="text/javascript" src="https://widget.shiptor.ru/embed/widget.js"></script>
+    <script type="text/javascript" src="https://widget.shiptor.ru/embed/widget-pvz.js"></script>
+    <script type="text/javascript" src="https://widget.shiptor.ru/embed/widget-track.js"></script>
 </head>
 <body>
-    <h1>Тестирование API SHIPTOR</h1>
+    <h1>Тестирование API Shiptor 1.1</h1>
+    <a href="index.html">На главную</a>
+    <br>
+    <br>
+    <br>
     <button data-role="shiptor_widget_add_basket" data-id="1" data-q="1">Купить товар 1</button>
     <br>
     <button data-role="shiptor_widget_add_basket" data-id="2" data-q="1">Купить товар 2</button>
+    <br>
+    <br>
+
     <div id="shiptor_widget" class="_shiptor_widget"
-         data-cod="1" data-kladr="7700000000"
+         data-cod="1" data-kladr="3600000100000"
          data-city="Воронеж" data-wk="3J9ZCSGSD950LCYKPS86Z80PQ1Y77KDHL7QU36992"
          style="display:none;"></div>
+     <button data-role="shiptor_widget_show" style="background-color: #ff7677">Инициировать виджеты</button>
+    <br>
+    <br>
+
+
+    <div id="shiptor_widget_delivery" class="_shiptor_widget"></div>
+    <button id="shiptor_widget_delivery_show" onclick="window.ShiptorWidget.show();">Показать виджет расчета заказа</button>
+    <br>
+    <br>
+
+
+    <div id="shiptor_widget_pvz" class="_shiptor_widget"></div>
+    <button id="shiptor_widget_pvz_show"  onclick="window.JCShiptorWidgetPvz.show();">Показать виджет выбора ПВЗ</button>
+    <br>
+    <br>
+
+
+    <div id="shiptor_widget_tracking" class="_shiptor_widget"></div>
+    <br>
+    <br>
 </body>
 </html>
