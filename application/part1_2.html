@@ -10,5 +10,103 @@
     <br>
     <br>
     <br>
+    <div id="api_output"></div>
+
+    <script>
+        function Ajax() {
+            this.XHR = function() {
+                if (XMLHttpRequest) {
+                    return new XMLHttpRequest();
+                } else {
+                    throw new Error('XHR не поддерживается');
+                }
+            };
+            this.setHeaders = function(xhr, headers) {
+
+            };
+            this.request = function(_data, _options) {
+                const $R = this.XHR();
+                var data = _data || {},
+                    options = {
+                        method: 'POST',
+                        headers: [
+                            [
+                                'Content-Type',
+                                'application/json; charset=utf-8',
+                            ],
+                            [
+                                'x-authorization-token',
+                                '5a9a56c1d6bceaa9e6c2cde5fca94e8a996b6469',
+                            ],
+                        ],
+                        url: 'https://api.shiptor.ru/public/v1',
+                        // url: 'localhost',
+                        async: true,
+                        success: function() {
+                        },
+                        error: function() {
+                        },
+                    };
+
+                let encodedData = JSON.stringify(data);
+
+                console.log('json', encodedData);
+
+                if (_options) {
+                    for (let i in _options) {
+                        options[i] = _options[i];
+                    }
+                }
+                $R.open(options.method, options.url, options.async);
+                $R.onreadystatechange = function() {
+                    if (this.readyState === 4) {
+                        if (this.status === 200) {
+                            if (this.responseText === '') throw new Error('Ответ пустой');
+                            options.success(this.responseText);
+                        } else {
+                            options.error(this.responseText);
+                            switch (this.status) {
+                                case 404:
+                                    throw new Error('Страница не найдена');
+                                case 0:
+                                    throw new Error('Нет соединения с сервером');
+                                default:
+                                    throw new Error(`Неизвестная ошибка (${$R.status}})`);
+                            }
+                        }
+                    }
+                };
+                for (let i = 0; i < options.headers.length; i++) {
+                    let $i = options.headers[i];
+                    $R.setRequestHeader($i[0], $i[1]);
+                }
+                $R.send(encodedData);
+            };
+        }
+
+        let data = {
+            'id': 'JsonRpcClient.js',
+            'jsonrpc': '2.0',
+            'method': 'getSettlements',
+            'params': {
+                'per_page': 10,
+                'page': 1,
+                'types': [
+                    'Город',
+                ],
+                'level': 2,
+                'parent': '3600000100000',
+                'country_code': 'RU',
+            },
+        };
+        let $ajax = new Ajax();
+        $ajax.request(data, {
+            url: 'https://api.shiptor.ru/public/v1',
+            success: function(response) {
+                window.document.querySelector('#api_output').innerHTML = response;
+                console.log(JSON.parse(response));
+            },
+        });
+    </script>
 </body>
 </html>
