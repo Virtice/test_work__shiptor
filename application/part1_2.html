@@ -3,6 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Тестирование API Shiptor 1.2 (js)</title>
+    <style>
+        label {
+            display: inline-block;
+            min-width: 250px;
+        }
+        input {
+            min-width: 150px;
+        }
+        select {
+            min-width: 156px;
+        }
+    </style>
     <script>
         function Ajax() {
             this.XHR = function() {
@@ -126,13 +138,20 @@
     <br>
     <br>
     <br>
-    <div id="api_output"></div>
-    <label for="settlements_search_input">Поиск города по названию</label>
-    <input type="text" id="settlements_search_input">
 
-    <button id="settlements_search_button">Поиск</button>
-    <label for="settlements_list">Выбрать из списка результатов</label>
-    <select id="settlements_list"></select>
+    <section id="settlements">
+        <div id="api_output"></div>
+        <label for="settlements_search_input">Поиск города по названию</label>
+        <input type="text" id="settlements_search_input">
+        <button id="settlements_search_button">Поиск</button>
+        <br>
+        <label for="settlements_list">Выбрать из списка результатов</label>
+        <select id="settlements_list"></select>
+    </section>
+
+    <section id="shipping">
+
+    </section>
 
     <script>
         const initDefaultSettlements = function() {
