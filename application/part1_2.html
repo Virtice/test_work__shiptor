@@ -3,15 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Тестирование API Shiptor 1.2 (js)</title>
-</head>
-<body>
-    <h1>Тестирование API Shiptor 1.2</h1>
-    <a href="index.html">На главную</a>
-    <br>
-    <br>
-    <br>
-    <div id="api_output"></div>
-
     <script>
         function Ajax() {
             this.XHR = function() {
@@ -21,12 +12,9 @@
                     throw new Error('XHR не поддерживается');
                 }
             };
-            this.setHeaders = function(xhr, headers) {
-
-            };
             this.request = function(_data, _options) {
                 const $R = this.XHR();
-                var data = _data || {},
+                let data = _data || {},
                     options = {
                         method: 'POST',
                         headers: [
@@ -39,8 +27,7 @@
                                 '5a9a56c1d6bceaa9e6c2cde5fca94e8a996b6469',
                             ],
                         ],
-                        url: 'https://api.shiptor.ru/public/v1',
-                        // url: 'localhost',
+                        url: null,
                         async: true,
                         success: function() {
                         },
@@ -50,13 +37,16 @@
 
                 let encodedData = JSON.stringify(data);
 
-                console.log('json', encodedData);
-
                 if (_options) {
                     for (let i in _options) {
                         options[i] = _options[i];
                     }
                 }
+
+                if (options.url === null) {
+                    throw new Error('Не залан url назначения');
+                }
+
                 $R.open(options.method, options.url, options.async);
                 $R.onreadystatechange = function() {
                     if (this.readyState === 4) {
@@ -84,29 +74,125 @@
             };
         }
 
-        let data = {
-            'id': 'JsonRpcClient.js',
-            'jsonrpc': '2.0',
-            'method': 'getSettlements',
-            'params': {
-                'per_page': 10,
-                'page': 1,
-                'types': [
-                    'Город',
-                ],
-                'level': 2,
-                'parent': '3600000100000',
-                'country_code': 'RU',
-            },
+        function createSettlementsDropdawn(response) {
+            const dropdawn = window.document.querySelector('#settlements_list'),
+                settlements = response.result.settlements;
+
+            if (settlements.length > 0) {
+                let fragment = window.document.createDocumentFragment();
+                for (let i = 0; i < settlements.length; i++) {
+                    let $i = settlements[i],
+                        option = window.document.createElement('OPTION');
+                    option.innerHTML = $i.name;
+                    option.value = $i.kladr_id;
+                    fragment.appendChild(option);
+                }
+                dropdawn.appendChild(fragment);
+            } else {
+                let option = window.document.createElement('OPTION');
+                option.innerHTML = 'Ничего не найдено';
+                option.value = 0;
+                dropdawn.appendChild(option);
+            }
+        }
+
+        function createSettlementsDropdawnFromSearch(response) {
+            const dropdawn = window.document.querySelector('#settlements_list'),
+                settlements = response.result;
+
+            dropdawn.innerHTML = '';
+            if (settlements.length > 0) {
+                let fragment = window.document.createDocumentFragment();
+                for (let i = 0; i < settlements.length; i++) {
+                    let $i = settlements[i],
+                        option = window.document.createElement('OPTION');
+                    option.innerHTML = $i.short_readable;
+                    option.value = $i.kladr_id;
+                    fragment.appendChild(option);
+                }
+                dropdawn.appendChild(fragment);
+            } else {
+                let option = window.document.createElement('OPTION');
+                option.innerHTML = 'Ничего не найдено';
+                option.value = 0;
+                dropdawn.appendChild(option);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Тестирование API Shiptor 1.2</h1>
+    <a href="index.html">На главную</a>
+    <br>
+    <br>
+    <br>
+    <div id="api_output"></div>
+    <label for="settlements_search_input">Поиск города по названию</label>
+    <input type="text" id="settlements_search_input">
+
+    <button id="settlements_search_button">Поиск</button>
+    <label for="settlements_list">Выбрать из списка результатов</label>
+    <select id="settlements_list"></select>
+
+    <script>
+        const initDefaultSettlements = function() {
+            let data = {
+                'id': 'JsonRpcClient.js',
+                'jsonrpc': '2.0',
+                'method': 'getSettlements',
+                'params': {
+                    'per_page': 10,
+                    'page': 1,
+                    'types': [
+                        'Город',
+                    ],
+                    'level': 2,
+                    'parent': '36000000000',
+                    'country_code': 'RU',
+                },
+            };
+            let $ajax = new Ajax();
+            $ajax.request(data, {
+                url: 'https://api.shiptor.ru/public/v1',
+                success: function(response) {
+                    const responseObject = JSON.parse(response);
+                    console.log(responseObject);
+                    createSettlementsDropdawn(responseObject);
+                },
+            });
         };
-        let $ajax = new Ajax();
-        $ajax.request(data, {
-            url: 'https://api.shiptor.ru/public/v1',
-            success: function(response) {
-                window.document.querySelector('#api_output').innerHTML = response;
-                console.log(JSON.parse(response));
-            },
-        });
+
+        const settlementsSearchButton = window.document.querySelector('#settlements_search_button');
+        settlementsSearchButton.onclick = function() {
+            const settlementsSearchInput = window.document.querySelector('#settlements_search_input');
+
+            if (settlementsSearchInput.value === '') {
+                return;
+            }
+
+            let data = {
+                'id': 'JsonRpcClient.js',
+                'jsonrpc': '2.0',
+                'method': 'suggestSettlement',
+                'params': {
+                    'query': settlementsSearchInput.value,
+                    //"parent": "36000000000",
+                    'country_code': 'RU',
+                },
+            };
+
+            let $ajax = new Ajax();
+            $ajax.request(data, {
+                url: 'https://api.shiptor.ru/public/v1',
+                success: function(response) {
+                    const responseObject = JSON.parse(response);
+                    console.log(responseObject);
+                    createSettlementsDropdawnFromSearch(responseObject);
+                },
+            });
+        };
+
+        initDefaultSettlements();
     </script>
 </body>
 </html>
