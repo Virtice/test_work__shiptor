@@ -1,55 +1,34 @@
 <?php
 
+use application\part_1_2_php\constants\ActionConstants;
+
+$settlements = $response['result']['settlements'];
+
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Тестирование API Shiptor 1.2 (php)</title>
-    <style>
-        label {
-            display: inline-block;
-            min-width: 250px;
+<h1>Тестирование API Shiptor 1.2</h1>
+<a href="index.html">На главную</a>
+<br>
+<br>
+
+<h1>Выбор города для доставки</h1>
+
+<form method="post">
+    <label for="settlements_search_input">Поиск города по названию</label>
+    <input type="text" id="settlements_search_input">
+    <input type="hidden" name="action" value="<?= ActionConstants::ACTION_SEARCH_SETTLEMENT ?>">
+    <button type="submit" id="settlements_search_button">Поиск</button>
+</form>
+
+<form method="post">
+    <label for="settlements_list">Выбрать город</label>
+    <select id="settlements_list">
+        <?php
+        foreach ($settlements as $settlement) {
+            echo "<option value='{$settlement['kladr_id']}'>{$settlement['name']}</option>";
         }
+        ?>
+    </select>
+    <input type="hidden" name="action" value="<?= ActionConstants::ACTION_SELECT_SETTLEMENT ?>">
+</form>
 
-        input {
-            min-width: 150px;
-        }
-
-        select {
-            min-width: 156px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Тестирование API Shiptor 1.2</h1>
-    <a href="index.html">На главную</a>
-    <br>
-    <br>
-    <div id="api_output"><?= $responseJson ?></div>
-
-
-    <section id="settlements">
-        <br>
-        <label for="settlements_search_input">Поиск города по названию</label>
-        <input type="text" id="settlements_search_input">
-        <button id="settlements_search_button">Поиск</button>
-        <br>
-        <label for="settlements_list">Выбрать город</label>
-        <select id="settlements_list">
-            <?php
-            foreach ($settlements as $settlement) {
-                echo "<option value='{$settlement['kladr_id']}'>{$settlement['name']}</option>";
-            }
-            ?>
-        </select>
-    </section>
-
-    <section id="shipping" style="display: none">
-        <br>
-        <label for="shipping_list">Выбрать доставку</label>
-        <select id="shipping_list"></select>
-    </section>
-</body>
-</html>

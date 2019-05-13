@@ -20,7 +20,7 @@ $routerData = $router->init();
 
 $headers = ApiRequestRepository::getHeaders();
 $api = new ApiRequester($headers);
-$response = $api->request($routerData->apiRequestData);
+$response = json_decode($api->request($routerData->apiRequestData), true);
 
-$viewer = new Viewer($routerData->action, $routerData->params);
+$viewer = new Viewer($routerData->viewPath, $routerData->params, $response);
 $viewer->render();

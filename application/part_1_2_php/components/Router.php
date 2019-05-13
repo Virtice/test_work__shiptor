@@ -14,6 +14,7 @@ class Router
      * @var array
      */
     private $post;
+    private $viewPathPrefix = 'application/part_1_2_php/views/';
 
     public function __construct(array $post)
     {
@@ -24,10 +25,12 @@ class Router
     {
         $params = null;
         $apiRequestData = null;
+        $viewPath = null;
         switch ($this->post['action']) {
             case ActionConstants::ACTION_INITIAL:
                 $params = null;
                 $apiRequestData = ApiRequestRepository::getDefaultSettlements('36000000000');
+                $viewPath = $this->viewPathPrefix . 'initial.php';
                 break;
             case ActionConstants::ACTION_SEARCH_SETTLEMENT:
                 break;
@@ -44,7 +47,8 @@ class Router
         return new RouterDataObject(
             $action,
             $params,
-            $apiRequestData
+            $apiRequestData,
+            $viewPath,
         );
     }
 }

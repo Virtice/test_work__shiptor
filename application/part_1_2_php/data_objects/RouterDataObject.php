@@ -22,16 +22,22 @@ class RouterDataObject
      * @var array|null
      */
     public $apiRequestData;
+    /**
+     * @var string
+     */
+    public $viewPath;
 
     public function __construct(
         string $action,
         ?ActionParamsDataObjectInterface $params,
-        ?ApiRequestRepositoryDataObject $apiRequestData
+        ?ApiRequestRepositoryDataObject $apiRequestData,
+        string $viewPath
     )
     {
 
         $this->action = $action;
         $this->params = $params;
         $this->apiRequestData = $apiRequestData;
+        $this->viewPath = $viewPath;
     }
 }
