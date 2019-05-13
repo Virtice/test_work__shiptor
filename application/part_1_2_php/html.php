@@ -1,42 +1,8 @@
 <?php
 
-require 'part_1_2_php/index.php';
 
-$data = [
-    'id' => 'JsonRpcClient.js',
-    'jsonrpc' => '2.0',
-    'method' => 'getSettlements',
-    'params' => [
-        'per_page' => 10,
-        'page' => 1,
-        'types' => [
-            'Город',
-        ],
-        'level' => 2,
-        'parent' => '36000000000',
-        'country_code' => 'RU',
-    ],
-];
 
-$headers = [
-    'Content-Type: application/json; charset=utf-8',
-    'x-authorization-token: 5a9a56c1d6bceaa9e6c2cde5fca94e8a996b6469',
-];
-
-$handler = curl_init('https://api.shiptor.ru/public/v1');
-curl_setopt($handler, CURLOPT_POST, true);
-curl_setopt($handler, CURLOPT_HEADER, false);
-curl_setopt($handler, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($handler, CURLOPT_SSL_VERIFYPEER, false);
-curl_setopt($handler, CURLOPT_POSTFIELDS, json_encode($data));
-curl_setopt($handler, CURLOPT_HTTPHEADER, $headers);
-$responseJson = curl_exec($handler);
-curl_close($handler);
-
-$response = json_decode($responseJson, true);
-$settlements = $response['result']['settlements'];
-
- ?>
+?>
 
 <!DOCTYPE html>
 <html lang="en">
