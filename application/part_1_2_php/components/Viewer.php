@@ -16,6 +16,10 @@ class Viewer
     /**
      * @var string
      */
+    public $action;
+    /**
+     * @var string
+     */
     public $viewPath;
     /**
      * @var ActionParamsDataObjectInterface|null
@@ -27,6 +31,7 @@ class Viewer
     public $response;
 
     public function __construct(
+        string $action,
         string $viewPath,
         ?ActionParamsDataObjectInterface $params,
         ?array $response
@@ -35,6 +40,7 @@ class Viewer
         $this->viewPath = $viewPath;
         $this->params = $params;
         $this->response = $response;
+        $this->action = $action;
     }
 
     public function render()

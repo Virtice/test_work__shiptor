@@ -24,7 +24,8 @@ class ApiRequestRepository
     {
         return new ApiRequestRepositoryDataObject(
             'https://api.shiptor.ru/public/v1',
-            ['id' => 'JsonRpcClient.js',
+            [
+                'id' => 'JsonRpcClient.js',
                 'jsonrpc' => '2.0',
                 'method' => 'getSettlements',
                 'params' => [
@@ -36,6 +37,41 @@ class ApiRequestRepository
                     'level' => 2,
                     'parent' => $parentKladrId,
                     'country_code' => 'RU',
+                ],
+            ]);
+    }
+
+    public static function getSearchSettlements(string $searchString)
+    {
+        return new ApiRequestRepositoryDataObject(
+            'https://api.shiptor.ru/public/v1',
+            [
+                'id' => 'JsonRpcClient.js',
+                'jsonrpc' => '2.0',
+                'method' => 'suggestSettlement',
+                'params' => [
+                    'query' => $searchString,
+                    'country_code' => 'RU',
+                ],
+            ]);
+    }
+
+    public static function getShippings(string $kladrId)
+    {
+        return new ApiRequestRepositoryDataObject(
+            'https://api.shiptor.ru/public/v1',
+            [
+                'id' => 'JsonRpcClient.js',
+                'jsonrpc' => '2.0',
+                'method' => 'calculateShipping',
+                'params' => [
+                    'length' => 20,
+                    'width' => 10,
+                    'height' => 20,
+                    'weight' => 1.5,
+                    'cod' => 10,
+                    'declared_cost' => 10,
+                    'kladr_id' => $kladrId,
                 ],
             ]);
     }
