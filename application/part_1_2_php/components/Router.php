@@ -1,11 +1,11 @@
 <?php
 
-namespace application\part_1_2_php\components;
+namespace components;
 
 
-use application\part_1_2_php\constants\ActionConstants;
-use application\part_1_2_php\data_objects\RouterDataObject;
-use application\part_1_2_php\repository\ApiRequestRepository;
+use constants\ActionConstants;
+use data_objects\RouterDataObject;
+use repository\ApiRequestRepository;
 use Exception;
 
 class Router
@@ -14,7 +14,7 @@ class Router
      * @var array
      */
     private $post;
-    private $viewPathPrefix = 'application/part_1_2_php/views/';
+    private $viewPathPrefix = 'views/';
 
     public function __construct(array $post)
     {

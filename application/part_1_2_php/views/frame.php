@@ -1,6 +1,6 @@
 <?php
 
-/** @var $body string */
+/** @var $this \components\Viewer */
 
 ?>
 
@@ -24,5 +24,5 @@
         }
     </style>
 </head>
-<body><?= $body ?></body>
+<body><?php include $this->viewPath; ?></body>
 </html>

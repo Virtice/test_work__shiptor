@@ -1,11 +1,11 @@
 <?php
 
-use application\part_1_2_php\components\ApiRequester;
-use application\part_1_2_php\components\Autoloader;
-use application\part_1_2_php\components\Router;
-use application\part_1_2_php\components\Viewer;
-use application\part_1_2_php\constants\ActionConstants;
-use application\part_1_2_php\repository\ApiRequestRepository;
+use components\ApiRequester;
+use components\Autoloader;
+use components\Router;
+use components\Viewer;
+use constants\ActionConstants;
+use repository\ApiRequestRepository;
 
 require 'components/Autoloader.php';
 

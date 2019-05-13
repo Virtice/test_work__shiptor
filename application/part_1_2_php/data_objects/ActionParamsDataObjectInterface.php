@@ -5,7 +5,7 @@
  * Time: 18:19
  */
 
-namespace application\part_1_2_php\data_objects;
+namespace data_objects;
 
 
 interface ActionParamsDataObjectInterface

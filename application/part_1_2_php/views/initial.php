@@ -1,8 +1,10 @@
 <?php
 
-use application\part_1_2_php\constants\ActionConstants;
+use constants\ActionConstants;
 
-$settlements = $response['result']['settlements'];
+/** @var $this \components\Viewer */
+
+$settlements = $this->response['result']['settlements'];
 
 ?>
 

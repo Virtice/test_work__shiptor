@@ -5,7 +5,7 @@
  * Time: 18:40
  */
 
-namespace application\part_1_2_php\constants;
+namespace constants;
 
 class ActionConstants
 {

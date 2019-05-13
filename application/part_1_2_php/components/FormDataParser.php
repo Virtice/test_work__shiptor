@@ -5,7 +5,7 @@
  * Time: 18:13
  */
 
-namespace application\part_1_2_php\components;
+namespace components;
 
 
 class FormDataParser

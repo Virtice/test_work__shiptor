@@ -5,10 +5,10 @@
  * Time: 17:58
  */
 
-namespace application\part_1_2_php\components;
+namespace components;
 
 
-use application\part_1_2_php\data_objects\ActionParamsDataObjectInterface;
+use data_objects\ActionParamsDataObjectInterface;
 
 class Viewer
 {
@@ -16,15 +16,15 @@ class Viewer
     /**
      * @var string
      */
-    private $viewPath;
+    public $viewPath;
     /**
      * @var ActionParamsDataObjectInterface|null
      */
-    private $params;
+    public $params;
     /**
      * @var array|null
      */
-    private $response;
+    public $response;
 
     public function __construct(
         string $viewPath,
@@ -39,7 +39,6 @@ class Viewer
 
     public function render()
     {
-        $body = include 'application/part_1_2_php/views/initial.php';
-        include 'application/part_1_2_php/views/frame.php';
+        include 'views/frame.php';
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace application\part_1_2_php\components;
+namespace components;
 
 
 class Autoloader

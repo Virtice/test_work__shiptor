@@ -5,10 +5,10 @@
  * Time: 18:14
  */
 
-namespace application\part_1_2_php\components;
+namespace components;
 
 
-use application\part_1_2_php\data_objects\ApiRequestRepositoryDataObject;
+use data_objects\ApiRequestRepositoryDataObject;
 
 class ApiRequester
 {
