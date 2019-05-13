@@ -3,6 +3,7 @@
 namespace application\part_1_2_php\components;
 
 
+use application\part_1_2_php\data_objects\InitialDataObject;
 use Exception;
 
 class Router
@@ -40,7 +41,7 @@ class Router
      * @return array|null
      * @throws Exception
      */
-    public function getParamsForAction(): ?array
+    public function getParamsForAction(): ?object
     {
         $data = $this->getFormData();
 
@@ -71,6 +72,7 @@ class Router
         $params = null;
         switch ($post['action']) {
             case self::ACTION_INITIAL:
+                $params = new InitialDataObject('36000000000');
                 break;
             case self::ACTION_SEARCH_SETTLEMENT:
                 break;
