@@ -18,10 +18,7 @@ $data = [
     ],
 ];
 
-$headers = [
-    'Content-Type: application/json; charset=utf-8',
-    'x-authorization-token: 5a9a56c1d6bceaa9e6c2cde5fca94e8a996b6469',
-];
+$headers =
 
 $handler = curl_init('https://api.shiptor.ru/public/v1');
 curl_setopt($handler, CURLOPT_POST, true);

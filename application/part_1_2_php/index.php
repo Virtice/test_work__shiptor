@@ -1,22 +1,26 @@
 <?php
 
+use application\part_1_2_php\components\ApiRequester;
 use application\part_1_2_php\components\Autoloader;
 use application\part_1_2_php\components\Router;
 use application\part_1_2_php\components\Viewer;
+use application\part_1_2_php\constants\ActionConstants;
+use application\part_1_2_php\repository\ApiRequestRepository;
 
 require 'components/Autoloader.php';
 
 Autoloader::init();
 
 if (empty($_POST['action'])) {
-    $_POST['action'] = Router::ACTION_INITIAL;
+    $_POST['action'] = ActionConstants::ACTION_INITIAL;
 }
 
 $router = new Router($_POST);
-$action = $router->getAction();
-$params = $router->getParamsForAction();
+$routerData = $router->init();
 
-$api = new ApiRequest();
+$headers = ApiRequestRepository::getHeaders();
+$api = new ApiRequester($headers);
+$response = $api->request($routerData->apiRequestData);
 
-$viewer = new Viewer($action, $params);
+$viewer = new Viewer($routerData->action, $routerData->params);
 $viewer->render();

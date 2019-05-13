@@ -8,6 +8,8 @@
 namespace application\part_1_2_php\components;
 
 
+use application\part_1_2_php\data_objects\ActionParamsDataObjectInterface;
+
 class Viewer
 {
     /**
@@ -19,7 +21,7 @@ class Viewer
      */
     private $params;
 
-    public function __construct(string $action, ?array $params)
+    public function __construct(string $action, ?ActionParamsDataObjectInterface $params)
     {
         $this->action = $action;
         $this->params = $params;

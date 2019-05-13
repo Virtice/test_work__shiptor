@@ -1,7 +1,5 @@
 <?php
 
-/** @var $params \application\part_1_2_php\data_objects\InitialDataObject */
-
 ?>
 
 <!DOCTYPE html>
